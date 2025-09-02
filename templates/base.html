@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+            articles
+        {%endblock%}
+    </title>
+    <link rel="stylesheet" href="/static/{% block static %}style.css{%endblock%}">
+    <link rel="stylesheet" href="/static/all.css">
+    <link rel="stylesheet" href="/static/fontawesome.css">
+</head>
+<body>
+<header>
+<h2 class="home"><a href="{% url 'articles:list' %}"><i class="fas fa-home home_icon"></i></a></h2>
+<nav>
+    <ul>
+        {% if user.is_authenticated %}
+        <li>
+            <form action="{% url 'accounts:logout' %}" class="logout-link" method="post">
+                {% csrf_token %}
+                <button type="submit">logout<i class="fas fa-sign-out-alt out-icon"></i> </button>
+            </form>
+        </li>
+        <li>
+            <a class="highlight" href="{% url 'articles:create' %}"><b>create article </b><i class="fas fa-pencil-alt pen"></i></a>
+        </li>
+        {% else %}
+        <li>
+            <a href="{% url 'accounts:login' %}" class="btnh">Login<i class="fas fa-sign-in-alt btnhi"></i></a>
+        </li>
+        <li>
+            <a href="{% url 'accounts:signup' %}" class="btnh">Sign up<i class="fas fa-user-plus btnhi"></i></a>
+        </li>
+        {%endif%}
+    </ul>
+</nav>
+</header>
+<div class="wrapper">
+    {% block content %}
+    {%endblock%}
+</div>
+</body>
+</html>
